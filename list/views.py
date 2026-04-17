@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.db.models import Case,When,IntegerField
 # Create your views here.
-
+#Here main Logic
 def add_task(request):
     if request.method=='POST':
         form=TaskForm(request.POST)
