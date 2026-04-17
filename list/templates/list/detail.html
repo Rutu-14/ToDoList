@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tasks</title>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+
+<body class="bg-gray-100">
+
+<!-- Navbar -->
+<nav class="bg-white shadow-md">
+<div class="max-w-5xl mx-auto flex justify-between items-center p-4">
+
+<h1 class="text-xl font-bold text-blue-600">Task Manager</h1>
+
+<div class="flex items-center gap-4">
+<span class="font-medium">
+Hello {{ request.user.username }}
+</span>
+
+<a href="{% url 'add' %}" 
+class="bg-green-500 text-white px-4 py-1 rounded hover:bg-green-600">
+Add Task
+</a>
+
+<form method="POST" action="{% url 'logout' %}">
+{% csrf_token %}
+<button class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
+Logout
+</button>
+</form>
+
+</div>
+
+</div>
+</nav>
+
+<div class="min-h-screen flex flex-col items-center p-10">
+
+<h1 class="text-3xl font-bold mb-6">Your Tasks</h1>
+
+<div class="space-y-4 w-96">
+
+{% for task in tasks %}
+<div class="bg-white shadow-md p-4 rounded-lg">
+
+{% if task.complete %}
+<p class="font-bold text-lg line-through text-gray-400">
+{{ task.task }}
+</p>
+<p class="text-gray-400">{{ task.desc }}</p>
+<p class="text-sm text-green-600 font-semibold">Completed ✓</p>
+
+{% else %}
+<p class="font-bold text-lg">{{ task.task }}</p>
+<p class="text-gray-600">{{ task.desc }}</p>
+<p class="text-sm text-blue-600">Priority: {{ task.priority }}</p>
+
+<div class="space-x-2 mt-3">
+
+<a href="{% url 'complete_task' task.id %}" 
+class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600">
+Mark Complete
+</a>
+
+<a href="{% url 'update' task.id %}" 
+class="text-white bg-blue-500 px-4 py-1 rounded hover:bg-blue-600">
+Update
+</a>
+
+<a href="{% url 'delete_task' task.id %}" 
+class="text-white bg-red-500 px-4 py-1 rounded hover:bg-red-600">
+Delete
+</a>
+
+</div>
+{% endif %}
+
+</div>
+{% endfor %}
+</div>
+
+</div>
+
+</body>
+</html>

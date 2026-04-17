@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body>
+    <div class="flex flex-col justify-center items-center min-h-screen p-8">
+    <h1>Login</h1>
+    <form method='POST' class="shadow-lg p-10 space-y-10">
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+        <div class="bg-red-500 text-white p-2">
+            {% for error in form.non_field_errors %}
+                <p>{{ error }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+        <label for="">Username</label>
+        <div class="border rounded p-2">{{form.username}}</div>
+        <label for="">Password</label>
+        <div class="border rounded p-2">{{form.password}}</div>
+        <button type='submit' class="bg-blue-500 px-2 py-2 w-full text-white font-bold">Login</button>
+        <a href="{% url 'register' %}" 
+   class="bg-blue-500 px-2 py-2 w-full text-white font-bold text-center block">
+    Register</a>
+    </form>
+</div>
+</body>
+</html>
